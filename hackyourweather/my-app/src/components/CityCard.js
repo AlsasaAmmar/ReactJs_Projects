@@ -4,31 +4,36 @@ import Input from './Input'
 import { kelvinToCelsius } from 'temperature'
 import City from './City'
 
+
+
 function CityCard () {
   const [city, setCity] = useState('Amsterdam')
   const [inputValue, setInputValue] = useState('')
   const [error, setError] = useState(false)
   const [searchedCities, setSearchedCities] = useState([])
 
+  
+async function fetchData(url, setState, setError) {
+    try {
+      const result = await axios(url)
+      setState(s => s.concat(result.data))
+      setError(false)
+    } catch (error) {
+      console.log(error)
+      setError(true)
+    }
+  }
+
   useEffect(() => {
     const APIKEY = process.env.REACT_APP_API_KEY
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKEY}`
-    const fetchData = async () => {
-      try {
-        const result = await axios(url)
-        setSearchedCities(s => s.concat(result.data))
-        console.log(result.data)
-        setError(false)
-      } catch (error) {
-        console.log(error)
-        setError(true)
-      }
-    }
-    fetchData()
+    fetchData(url, setSearchedCities, setError)
   }, [city])
 
+  
   function handleInput (e) {
-    setInputValue(e.target.value)
+    const input = e.target.value;
+    setInputValue(input);
   }
 
   function handleSubmit (e) {
@@ -42,13 +47,13 @@ function CityCard () {
       return city.id !== id
     })
     setSearchedCities(remainingCities)
-    console.log('handleClose -> remainingCities', remainingCities)
   }
 
   return (
     <div className='wrapper'>
       <Input
         handleInput={handleInput}
+        value= {inputValue}
         disabled={!inputValue}
         handleSubmit={handleSubmit}
         type={'submit'}
@@ -56,7 +61,6 @@ function CityCard () {
       />
       {error && (
         <p className='danger'>
-          {' '}
           "{city}" is not found.<br></br> Please enter another city
         </p>
       )}
@@ -73,8 +77,8 @@ function CityCard () {
             .map(data => {
               return (
                 <City
-                  key={data.id}
-                  id={data.id}
+                key={data.id}
+                id={data.id}
                   handleClose={handleClose}
                   name={data.name}
                   country={data.sys}
@@ -103,4 +107,5 @@ function CityCard () {
   )
 }
 
-export default CityCard
+
+export default CityCard; 
