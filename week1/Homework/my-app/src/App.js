@@ -4,9 +4,7 @@ import Guarantee from './Guarantee';
 import Counter from './Counter'
 
 
-function App(props) {
-  const passedHobbies = props.hobbies; 
-  const guaranteeBar = props.guaranteeBar;
+function App({passedHobbies, guaranteeBar}) {
   return (
     <div className="App">
      <HobbyList passedHobbies= {passedHobbies}/>
