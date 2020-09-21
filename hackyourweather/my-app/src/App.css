@@ -53,8 +53,12 @@ body{
 .search-form{
   margin: 1rem;
 }
-.danger{
+.warning{
   color: red;  
+  background-color: white;
+  width: 50vw;
+  margin: auto;
+  text-align: center;
 }
 .search-bar{
   border-radius: 5px;

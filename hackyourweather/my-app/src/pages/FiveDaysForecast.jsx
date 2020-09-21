@@ -27,7 +27,7 @@ const FiveDaysForecast = props => {
     const APIKEY = process.env.REACT_APP_API_KEY
     const url = `https://api.openweathermap.org/data/2.5/forecast?id=${cityID}&appid=${APIKEY}&units=metric`
     fetchData(url, setData, setError)
-  }, [])
+  }, [match.params.cityId])
 
   return (
     <div className='chart-wrapper'>

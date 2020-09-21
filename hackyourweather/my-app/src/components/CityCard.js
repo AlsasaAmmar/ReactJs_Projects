@@ -3,6 +3,7 @@ import axios from 'axios'
 import Input from './Input'
 import { kelvinToCelsius } from 'temperature'
 import City from './City'
+import Warning from './Warning'
 
 
 
@@ -59,11 +60,7 @@ async function fetchData(url, setState, setError) {
         type={'submit'}
         buttonName={'Search'}
       />
-      {error && (
-        <p className='danger'>
-          "{city}" is not found.<br></br> Please enter another city
-        </p>
-      )}
+      {error && <Warning city={city} /> }
       <div>
         {searchedCities.length === 0 ? (
           <div>
